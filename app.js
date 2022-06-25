@@ -34,6 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //==========router setting
 app.get('/', (req, res) => {
+    console.log('有勁/')
     Todo.find()
         .lean()
         .then(todos => res.render('index', { todos }))
@@ -48,7 +49,6 @@ app.get('/todos/new', (req, res) => {
 
 app.post('/todos', (req, res) => {
     const name = req.body.name
-    console.log(req.body)
     return Todo.create({ name })
         // return 後面還可以加程式是因為.then是asynchronous嗎
         .then(() => { res.redirect('/') })
@@ -56,7 +56,6 @@ app.post('/todos', (req, res) => {
 })
 
 app.get('/todos/:id', (req, res) => {
-    console.log(req)
     const id = req.params.id
     return Todo.findById(id)
         .lean()
@@ -86,12 +85,12 @@ app.post('/todos/:id/edit', (req, res) => {
         .catch(error => console.log(error))
 })
 
-app.post('todos/:id/delete', (req, res) => {
+app.post('/todos/:id/delete', (req, res) => {
     const id = req.params.id
     return Todo.findById(id)
         .then(todo => { todo.remove() })
-        .then(() => res.redirect(`/`))
-        .catch(error => console.error(error))
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
 })
 
 
