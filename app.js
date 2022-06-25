@@ -6,13 +6,6 @@ const port = 3000
 //==========data base setting
 const Todo = require('./models/todo')
 
-app.get('/', (req, res) => {
-    Todo.find()
-        .lean()
-        .then(todos => res.render('index', { todos }))
-        .catch(error => console.error(error))
-})
-
 //==========ODM setting(use mongoose)
 const mongoose = require('mongoose') // 載入 mongoose
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
@@ -35,7 +28,10 @@ app.set('view engine', 'hbs')
 
 //==========router setting
 app.get('/', (req, res) => {
-    res.render('index')
+    Todo.find()
+        .lean()
+        .then(todos => res.render('index', { todos }))
+        .catch(error => console.error(error))
 })
 
 //==========run server
