@@ -26,12 +26,33 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 
+//==========中介軟體 設定
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({ extended: true }))
+
+
 //==========router setting
 app.get('/', (req, res) => {
     Todo.find()
         .lean()
         .then(todos => res.render('index', { todos }))
         .catch(error => console.error(error))
+})
+
+
+//U70寫router要設定在todos/new，我設定一樣反而連不到??
+app.get('/new', (req, res) => {
+    return res.render('new')
+})
+
+app.post('/todos', (req, res) => {
+    const name = req.body.name
+    console.log(req.body)
+    return Todo.create({ name })
+        // return 後面還可以加程式是因為.then是asynchronous嗎
+        .then(() => { res.redirect('/') })
+        .catch(error => console.log(error))
 })
 
 //==========run server
