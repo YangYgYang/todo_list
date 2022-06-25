@@ -41,8 +41,8 @@ app.get('/', (req, res) => {
 })
 
 
-//U70寫router要設定在todos/new，我設定一樣反而連不到??
-app.get('/new', (req, res) => {
+//怎麼抓到new檔案的？
+app.get('/todos/new', (req, res) => {
     return res.render('new')
 })
 
@@ -53,6 +53,16 @@ app.post('/todos', (req, res) => {
         // return 後面還可以加程式是因為.then是asynchronous嗎
         .then(() => { res.redirect('/') })
         .catch(error => console.log(error))
+})
+
+app.get('/todos/:id', (req, res) => {
+    console.log(req)
+    const id = req.params.id
+    return Todo.findById(id)
+        .lean()
+        .then((todo) => res.render('detail', { todo }))
+        .catch(error => console.log(error))
+
 })
 
 //==========run server
