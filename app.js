@@ -8,7 +8,7 @@ const Todo = require('./models/todo')
 
 //==========ODM setting(use mongoose)
 const mongoose = require('mongoose') // 載入 mongoose
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 
 const db = mongoose.connection
     //連線異常
@@ -64,7 +64,6 @@ app.get('/todos/:id', (req, res) => {
 
 })
 
-//怎麼知道我現在的request是POST還是GET
 app.get('/todos/:id/edit', (req, res) => {
     const id = req.params.id
     return Todo.findById(id)
@@ -75,10 +74,12 @@ app.get('/todos/:id/edit', (req, res) => {
 
 app.post('/todos/:id/edit', (req, res) => {
     const id = req.params.id
-    const name = req.body.name
+    const { isDone, name } = req.body
+    console.log('body', req.body)
     return Todo.findById(id)
         .then(todo => {
             todo.name = name
+            todo.isDone = isDone === 'on'
             return todo.save()
         })
         .then(() => res.redirect(`/todos/${id}`))

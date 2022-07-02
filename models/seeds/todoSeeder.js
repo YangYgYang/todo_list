@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Todo = require('../todo') // 載入 todo model
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection
 
