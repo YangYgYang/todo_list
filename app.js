@@ -31,6 +31,9 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//==========method-override 設定
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 
 //==========router setting
 app.get('/', (req, res) => {
@@ -73,7 +76,7 @@ app.get('/todos/:id/edit', (req, res) => {
         .catch(error => console.log(error))
 })
 
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id', (req, res) => {
     const id = req.params.id
     const { isDone, name } = req.body
     console.log('body', req.body)
@@ -87,7 +90,7 @@ app.post('/todos/:id/edit', (req, res) => {
         .catch(error => console.log(error))
 })
 
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id', (req, res) => {
     const id = req.params.id
     return Todo.findById(id)
         .then(todo => { todo.remove() })
