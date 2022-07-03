@@ -31,19 +31,24 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//==========method-override 設定
+//==========中介軟體 method-override 設定
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
+
+//require router引入routes就會自動去找目錄下index的檔案 為何(怎樣才會去去尋找？)
+const routes = require('./routes')
+app.use(routes)
+
 //==========router setting
-app.get('/', (req, res) => {
-    console.log('有勁/')
-    Todo.find()
-        .lean()
-        .sort({ _id: 'asc' }) //desc
-        .then(todos => res.render('index', { todos }))
-        .catch(error => console.error(error))
-})
+// app.get('/', (req, res) => {
+//     console.log('有勁/')
+//     Todo.find()
+//         .lean()
+//         .sort({ _id: 'asc' }) //desc
+//         .then(todos => res.render('index', { todos }))
+//         .catch(error => console.error(error))
+// })
 
 
 //怎麼抓到new檔案的？
