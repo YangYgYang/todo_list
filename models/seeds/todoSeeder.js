@@ -1,6 +1,6 @@
 const Todo = require('../todo') // 載入 todo model
 
-const db = require('./config/mongoose')
+const db = require('/config/mongoose')
 
 db.once('open', () => {
     console.log('mongodb connected!')
