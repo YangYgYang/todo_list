@@ -1,7 +1,7 @@
 //==========server setting
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 
 //==========data base setting
 const Todo = require('./models/todo')
