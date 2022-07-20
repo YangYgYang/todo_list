@@ -23,6 +23,10 @@ app.use(session({
     saveUninitialized: true
 }))
 
+// 載入設定檔，要寫在 express-session 以後
+const usePassport = require('./config/passport')
+    // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
+usePassport(app)
 
 //==========中介軟體 設定
 const bodyParser = require('body-parser')
