@@ -15,6 +15,14 @@ const exphbs = require('express-handlebars')
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+//==========session 設定
+const session = require('express-session')
+app.use(session({
+    secret: 'ThisIsMySecret',
+    resave: false,
+    saveUninitialized: true
+}))
+
 
 //==========中介軟體 設定
 const bodyParser = require('body-parser')
