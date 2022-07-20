@@ -5,10 +5,9 @@ const passport = require('passport')
 
 
 router.get('/login', (req, res) => {
-    res.render('login')
-})
-
-//??為何到login頁面要用post
+        res.render('login')
+    })
+    //??為何到login頁面要用post
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login'
@@ -35,5 +34,9 @@ router.post('/register', (req, res) => {
         .catch(error => console.log('error', error))
 })
 
+router.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/users/login')
+})
 
 module.exports = router

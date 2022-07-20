@@ -5,6 +5,11 @@ const Todo = require('../../models/todo')
 //==========router setting
 console.log('router', router)
 router.get('/', (req, res) => {
+    console.log(req.user)
+    if (typeof(req.user) === "undefined") {
+        res.redirect('/users/login')
+        return
+    }
     Todo.find()
         .lean()
         .sort({ _id: 'asc' }) // desc
