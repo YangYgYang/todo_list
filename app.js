@@ -30,12 +30,19 @@ usePassport(app)
 
 //==========中介軟體 設定
 const bodyParser = require('body-parser')
-
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //==========中介軟體 method-override 設定
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
+
+//==========middleware設定
+app.use((req, res, next) => {
+    console.log(req.user)
+    res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.user = req.user
+    next()
+})
 
 
 //require router引入routes就會自動去找目錄下index的檔案 為何(怎樣才會去去尋找？)
