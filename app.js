@@ -43,6 +43,16 @@ app.use((req, res, next) => {
     next()
 })
 
+//==========setting alert
+const flash = require('connect-flash')
+app.use(flash()) // 掛載套件
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.user = req.user
+    res.locals.success_msg = req.flash('success_msg') // 設定 success_msg 訊息
+    res.locals.warning_msg = req.flash('warning_msg') // 設定 warning_msg 訊息
+    next()
+})
 
 //require router引入routes就會自動去找目錄下index的檔案 為何(怎樣才會去去尋找？)
 const routes = require('./routes')
