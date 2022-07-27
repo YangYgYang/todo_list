@@ -2,6 +2,7 @@ const express = require('express')
 const userExample = require('../../models/user')
 const router = express.Router()
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 
 
 router.get('/login', (req, res) => {
@@ -38,7 +39,13 @@ router.post('/register', (req, res) => {
                 console.log('User already exists.')
                 res.render('register', userInfo)
             } else {
-                userExample.create(userInfo)
+                bcrypt.genSalt(10) // 產生「鹽」，並設定複雜度係數為 10
+                    .then(salt => bcrypt.hash(userInfo.password, salt))
+                    .then(hash => {
+                        userInfo.password = hash
+                        userExample.create(userInfo)
+                    })
+
                 res.redirect('/')
             }
         })

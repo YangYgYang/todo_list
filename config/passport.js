@@ -2,6 +2,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const userExample = require('../models/user')
+const bcrypt = require('bcryptjs')
 
 module.exports = function(app) {
     // 初始化 Passport 模組
