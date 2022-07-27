@@ -3,6 +3,10 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
 //==========data base setting
 const Todo = require('./models/todo')
 
@@ -18,7 +22,7 @@ app.set('view engine', 'hbs')
 //==========session 設定
 const session = require('express-session')
 app.use(session({
-    secret: 'ThisIsMySecret',
+    secret: process.env.SESSION_SECRECT,
     resave: false,
     saveUninitialized: true
 }))
