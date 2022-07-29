@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
                 res.render('register', userInfo)
             } else {
                 bcrypt.genSalt(10) // 產生「鹽」，並設定複雜度係數為 10
-                    .then(salt => bcrypt.hash(userInfo.password, salt))
+                    .then(salt => { return bcrypt.hash(userInfo.password, salt) })
                     .then(hash => {
                         userInfo.password = hash
                         userExample.create(userInfo)
